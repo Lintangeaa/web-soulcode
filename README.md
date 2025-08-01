@@ -69,3 +69,4 @@ export default tseslint.config([
 ```
 # web-soulcode
 # web-soulcode
+# web-soulcode
