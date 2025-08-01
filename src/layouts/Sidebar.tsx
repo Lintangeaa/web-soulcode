@@ -9,8 +9,8 @@ import {
   FiBox,
   FiChevronDown,
   FiChevronRight,
-  FiFileText,
-  FiUser
+  FiFolder,
+  FiServer
 } from 'react-icons/fi'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
@@ -51,8 +51,8 @@ export function Sidebar() {
   // User menu items
   const userMenuItems: MenuItem[] = [
     { id: 'dashboard', label: 'Dashboard', icon: FiBarChart, path: '/user/dashboard' },
-    { id: 'profile', label: 'My Profile', icon: FiUser, path: '/user/profile' },
-    { id: 'documents', label: 'My Documents', icon: FiFileText, path: '/user/documents' },
+    { id: 'services', label: 'Services', icon: FiServer, path: '/user/services' },
+    { id: 'projects', label: 'Projects', icon: FiFolder, path: '/user/projects' },
   ]
 
   const menuItems = user?.role === 'admin' ? adminMenuItems : userMenuItems
@@ -136,7 +136,7 @@ export function Sidebar() {
   return (
     <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       <div className="flex justify-between items-center px-6 h-16 border-b border-gray-200">
-        <h1 className="text-xl font-bold text-gray-800">Admin Panel</h1>
+        <h1 className="text-xl font-bold text-gray-800">{user?.role === 'admin' ? 'Admin Panel' : 'Soulcode'}</h1>
         <button
           onClick={closeSidebar}
           className="p-2 text-gray-400 rounded-md lg:hidden hover:text-gray-600"

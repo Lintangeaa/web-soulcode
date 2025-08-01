@@ -17,7 +17,7 @@ export function Card({
   padding = 'md',
   className = ''
 }: CardProps) {
-  const baseClasses = 'rounded-lg'
+  const baseClasses = 'rounded-lg hover:cursor-pointer'
   
   const variantClasses = {
     default: 'bg-white shadow',
@@ -49,7 +49,7 @@ export function Card({
             </h3>
           )}
           {subtitle && (
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="mt-1 text-sm text-gray-600">
               {subtitle}
             </p>
           )}

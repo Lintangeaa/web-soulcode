@@ -1,1 +1,1 @@
-export { Dashboard } from './components/Dashboard' 
+export { AdminDashboard } from './components/Dashboard' 

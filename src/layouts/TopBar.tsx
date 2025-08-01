@@ -7,7 +7,7 @@ export function TopBar() {
   const { user, logout } = useAuthStore()
 
   return (
-    <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+    <div className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm lg:left-64">
       <div className="flex justify-between items-center px-4 h-16 lg:px-6">
         <button
           onClick={openSidebar}
@@ -18,16 +18,16 @@ export function TopBar() {
         
         <div className="flex items-center space-x-4">
           <div className="relative">
-            <button className="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
-              <div className="flex justify-center items-center w-8 h-8 bg-gray-300 rounded-full">
+            <button className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200">
+              <div className="flex justify-center items-center w-8 h-8 bg-gray-300 rounded-full overflow-hidden">
                 <img
                   src={user?.avatar || 'https://via.placeholder.com/32'}
                   alt={user?.name}
-                  className="w-8 h-8 rounded-full object-cover"
+                  className="object-cover w-8 h-8 rounded-full"
                 />
               </div>
-              <span className="hidden md:block">{user?.name || 'User'}</span>
-              <FiChevronDown className="w-4 h-4" />
+              <span className="hidden md:block font-medium">{user?.name || 'User'}</span>
+              <FiChevronDown className="w-4 h-4 transition-transform duration-200" />
             </button>
           </div>
           <Button
@@ -35,9 +35,9 @@ export function TopBar() {
             size="sm"
             onClick={logout}
             icon={<FiLogOut className="w-4 h-4" />}
-            className="text-gray-600 hover:text-gray-900"
+            className="text-gray-600 hover:text-gray-900 transition-colors duration-200"
           >
-            Logout
+            <span className="hidden sm:inline">Logout</span>
           </Button>
         </div>
       </div>

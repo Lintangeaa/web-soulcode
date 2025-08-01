@@ -1,5 +1,5 @@
+import type { User } from '@/features/admin/users'
 import { create } from 'zustand'
-import type { User } from '../features/users/types'
 
 interface UserState {
   users: User[]

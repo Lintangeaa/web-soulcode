@@ -8,7 +8,7 @@ import {
   ComponentDemo, 
   Users 
 } from '@/features/admin'
-import { UserDashboard } from '@/features/user'
+import { Projects, Services, UserDashboard } from '@/features/user'
 import { SettingsContent } from '@/features/admin/dashboard/components/SettingsContent'
 
 export function AppRoutes() {
@@ -41,6 +41,8 @@ export function AppRoutes() {
         }>
           <Route index element={<Navigate to="/user/dashboard" replace />} />
           <Route path="dashboard" element={<UserDashboard />} />
+          <Route path="services" element={<Services />} />
+          <Route path="projects" element={<Projects />} />
         </Route>
 
         {/* Default redirect based on role */}
