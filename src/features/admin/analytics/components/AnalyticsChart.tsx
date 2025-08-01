@@ -1,4 +1,4 @@
-import type { TimeSeriesData } from '../../../stores/analyticsStore'
+import type { TimeSeriesData } from '@/stores/admin/analyticsStore'
 
 interface AnalyticsChartProps {
   title: string

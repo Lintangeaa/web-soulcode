@@ -1,1 +1,0 @@
-export { IconDemo } from './components/IconDemo' 
