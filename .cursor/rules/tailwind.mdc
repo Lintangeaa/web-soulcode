@@ -1,0 +1,70 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+name: vite-best-practices.mdc
+description: Best practices for Vite applications
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+- Leverage Vite's fast hot module replacement (HMR) for rapid development.
+- Use the `defineConfig` function for better type inference in `vite.config.ts`.
+- Optimize build performance by using code splitting and dynamic imports.
+- Utilize Vite plugins for enhanced functionality, such as `vite-plugin-react` for React support.
+
+---
+name: react-best-practices.mdc
+description: Best practices for React applications
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+- Use functional components and hooks for cleaner and more maintainable code.
+- Implement context API for state management in larger applications.
+- Optimize performance with React.memo and useCallback/useMemo hooks.
+- Ensure accessibility by following ARIA guidelines and using semantic HTML.
+
+---
+name: typescript-best-practices.mdc 
+description: TypeScript coding standards and type safety guidelines
+globs: **/*.{ts,tsx}
+---
+
+- Use strict null checks to avoid runtime errors.
+- Prefer interface over type for defining object shapes.
+- Utilize type guards and assertions for better type safety.
+- Implement proper type inference to reduce redundancy in type declarations.
+
+---
+name: swc-best-practices.mdc
+description: Best practices for using SWC as a JavaScript/TypeScript compiler
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+- Configure SWC for optimal performance by using the `swcrc` file.
+- Use SWC's built-in support for JSX and TypeScript to streamline your build process.
+- Leverage SWC's minification capabilities for production builds.
+- Keep your SWC version updated to benefit from the latest performance improvements.
+
+---
+name: bun-best-practices.mdc
+description: Best practices for Bun applications
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+- Use Bun's built-in package manager for faster dependency installation.
+- Take advantage of Bun's native support for TypeScript and JSX.
+- Optimize performance by using Bun's built-in bundler for production builds.
+- Keep an eye on Bun's evolving ecosystem and leverage community plugins for added functionality.
+
+---
+name: tailwind-best-practices.mdc
+description: Guidelines for UI components and styling with Tailwind CSS
+globs: **/*.{ts,tsx,css}
+---
+
+- Use utility-first classes for rapid UI development and consistency.
+- Create custom themes and extend Tailwind's configuration for branding.
+- Utilize responsive design features by applying responsive utility classes.
+- Ensure accessibility by using Tailwind's built-in focus and hover states.

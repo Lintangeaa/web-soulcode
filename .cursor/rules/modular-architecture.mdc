@@ -1,0 +1,271 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+name: modular-architecture.mdc
+description: Modular by feature + colocated logic + lightweight tooling (Zustand, TanStack Query) + Tailwind
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+# 🏗️ Modular by Feature Architecture
+
+## Project Structure
+```
+src/
+├── features/
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── stores/
+│   │   ├── types/
+│   │   └── index.ts
+│   ├── users/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── stores/
+│   │   ├── types/
+│   │   └── index.ts
+│   └── dashboard/
+│       ├── components/
+│       ├── hooks/
+│       ├── stores/
+│       ├── types/
+│       └── index.ts
+├── shared/
+│   ├── components/
+│   ├── hooks/
+│   ├── utils/
+│   └── types/
+├── stores/
+│   ├── authStore.ts
+│   ├── userStore.ts
+│   └── index.ts
+├── routes/
+│   ├── AppRoutes.tsx
+│   └── index.ts
+└── App.tsx
+```
+
+## 📦 Lightweight Tooling Stack
+
+### State Management: Zustand
+- Use Zustand for lightweight, simple state management
+- Keep stores small and focused on specific domains
+- Avoid over-engineering - use React state for local component state
+- Example: `stores/authStore.ts`, `stores/userStore.ts`
+
+### Data Fetching: TanStack Query
+- Use TanStack Query (React Query) for server state management
+- Implement optimistic updates for better UX
+- Use query keys for proper cache invalidation
+- Keep queries colocated with components that use them
+
+### Routing: React Router
+- Use React Router for proper URL-based navigation
+- Implement route-based code splitting
+- Use nested routes for complex layouts
+- Avoid SPA with custom routing - use proper router
+
+### Styling: Tailwind CSS
+- Use utility-first classes for rapid UI development
+- Create custom themes and extend Tailwind's configuration
+- Use responsive design features with responsive utility classes
+- Ensure accessibility with built-in focus and hover states
+
+## 🔧 Colocated Logic Principles
+
+### Keep Related Code Together
+- Components, hooks, types, and stores should be in the same feature directory
+- Each feature should be self-contained
+- Use barrel exports for clean imports
+- Minimize cross-feature dependencies
+
+### Component Organization
+```tsx
+// features/users/components/UserList.tsx
+import { useUserStore } from '../stores/userStore'
+import type { User } from '../types/User'
+
+export function UserList() {
+  const { users, deleteUser } = useUserStore()
+  // Component logic
+}
+```
+
+### Store Organization
+```tsx
+// stores/userStore.ts
+import { create } from 'zustand'
+import type { User } from '../features/users/types/User'
+
+interface UserStore {
+  users: User[]
+  addUser: (user: User) => void
+  deleteUser: (id: number) => void
+}
+
+export const useUserStore = create<UserStore>((set) => ({
+  users: [],
+  addUser: (user) => set((state) => ({ 
+    users: [...state.users, user] 
+  })),
+  deleteUser: (id) => set((state) => ({ 
+    users: state.users.filter(u => u.id !== id) 
+  })),
+}))
+```
+
+## 🚫 Avoid State Drilling
+
+### ❌ Don't Do This (State Drilling)
+```tsx
+// Bad: Props drilling through multiple levels
+function App() {
+  const [users, setUsers] = useState([])
+  return <Dashboard users={users} setUsers={setUsers} />
+}
+
+function Dashboard({ users, setUsers }) {
+  return <UserList users={users} setUsers={setUsers} />
+}
+
+function UserList({ users, setUsers }) {
+  return <UserItem users={users} setUsers={setUsers} />
+}
+```
+
+### ✅ Do This (Zustand Store)
+```tsx
+// Good: Use Zustand store
+function App() {
+  return <Dashboard />
+}
+
+function Dashboard() {
+  return <UserList />
+}
+
+function UserList() {
+  const { users, deleteUser } = useUserStore()
+  return <UserItem users={users} onDelete={deleteUser} />
+}
+```
+
+## 🛣️ React Router Implementation
+
+### Route Structure
+```tsx
+// routes/AppRoutes.tsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Dashboard } from '../features/dashboard'
+import { Users } from '../features/users'
+import { Auth } from '../features/auth'
+
+export function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />}>
+          <Route index element={<DashboardContent />} />
+          <Route path="users" element={<Users />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+        <Route path="/auth" element={<Auth />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+```
+
+### Nested Routes with Layout
+```tsx
+// features/dashboard/components/DashboardLayout.tsx
+import { Outlet } from 'react-router-dom'
+import { Sidebar, TopBar } from './'
+
+export function DashboardLayout() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Sidebar />
+      <div className="lg:ml-64">
+        <TopBar />
+        <main className="p-4 lg:p-6">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  )
+}
+```
+
+## 🚀 Best Practices
+
+### Start Simple, Scale Gradually
+- Begin with React state for local component state
+- Add Zustand only when you need shared state
+- Use TanStack Query for server state management
+- Keep components small and focused
+
+### TypeScript Integration
+- Use strict null checks
+- Prefer interface over type for object shapes
+- Create branded types for domain-specific values
+- Keep types colocated with features
+
+### Performance Optimization
+- Use React.memo for expensive components
+- Implement useCallback/useMemo for expensive computations
+- Use code splitting with React.lazy()
+- Optimize bundle size with tree shaking
+
+### Testing Strategy
+- Test critical business logic
+- Use React Testing Library for component tests
+- Mock TanStack Query for data fetching tests
+- Test Zustand stores in isolation
+
+## 🎯 Key Principles
+
+1. **Modular by Feature**: Organize by business domain, not technical concerns
+2. **Colocated Logic**: Keep related code together
+3. **Lightweight Tooling**: Use simple, focused tools
+4. **Avoid State Drilling**: Use Zustand for shared state
+5. **Proper Routing**: Use React Router, not SPA with custom routing
+6. **Type Safety**: Leverage TypeScript for better DX
+7. **Performance**: Optimize for bundle size and runtime performance
+8. **Developer Experience**: Fast feedback loops with HMR and TypeScript
+
+## 📚 Recommended Dependencies
+
+```json
+{
+  "zustand": "^5.0.0",
+  "@tanstack/react-query": "^5.0.0",
+  "react-router-dom": "^6.0.0",
+  "tailwindcss": "^3.4.0",
+  "typescript": "^5.0.0",
+  "vite": "^5.0.0",
+  "react": "^18.0.0"
+}
+```
+
+## 🔄 Migration Path
+
+1. **Start with feature-based folders**
+2. **Move shared components to shared/**
+3. **Add Zustand for global state**
+4. **Integrate React Router for proper routing**
+5. **Add TanStack Query for data fetching**
+6. **Optimize with code splitting**
+7. **Add comprehensive TypeScript types**
+
+## 🚫 Anti-Patterns to Avoid
+
+- ❌ **State Drilling**: Passing state through multiple component levels
+- ❌ **Custom SPA Routing**: Don't use custom routing, use React Router
+- ❌ **Over-Engineering**: Don't add complexity before it's needed
+- ❌ **Monolithic Components**: Don't create huge components
+- ❌ **Mixed Concerns**: Don't mix UI logic with business logic
