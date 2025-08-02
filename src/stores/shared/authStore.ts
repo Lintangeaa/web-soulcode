@@ -103,8 +103,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   logout: () => {
     set({ user: null, isAuthenticated: false, message: '' })
     localStorage.removeItem('auth_token')
-    // Redirect to login page
-    window.location.href = '/login'
+    // Use window.location.replace for better SPA handling
+    window.location.replace('/login')
   },
 
   checkAuth: async () => {
