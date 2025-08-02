@@ -1,5 +1,5 @@
 export interface User extends Record<string, unknown> {
-  id: number
+  id: string
   name: string
   email: string
   role: string

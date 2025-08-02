@@ -1,3 +1,5 @@
 export { LoginForm } from './components/LoginForm'
+export { RegisterForm } from './components/RegisterForm'
 export { ProtectedRoute } from './components/ProtectedRoute'
-export type { User, LoginCredentials, AuthState } from './types' 
+export { RoleRedirect } from './components/RoleRedirect'
+export type { User, LoginCredentials, RegisterCredentials, AuthState } from './types' 

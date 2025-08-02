@@ -84,7 +84,7 @@ export function UserTable() {
           <DangerButton
             size="sm"
             icon={<FiTrash2 className="w-4 h-4" />}
-            onConfirm={() => deleteUser(row.id as number)}
+            onConfirm={() => deleteUser(row.id as string)}
             confirmTitle="Delete User"
             confirmMessage={`Are you sure you want to delete ${row.name as string}? This action cannot be undone.`}
             confirmButtonText="Delete User"

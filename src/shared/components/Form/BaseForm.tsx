@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 interface FormFieldConfig<T> {
   initialValue: T
-  validation?: (value: T) => string | undefined
+  validation?: (value: T, allValues?: Record<string, unknown>) => string | undefined
   required?: boolean
 }
 
@@ -46,7 +46,7 @@ export function BaseForm({
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const validateField = useCallback((name: string, value: unknown): string | undefined => {
+  const validateField = useCallback((name: string, value: unknown, allValues?: Record<string, unknown>): string | undefined => {
     const fieldConfig = initialValues[name]
     if (!fieldConfig) return undefined
 
@@ -57,17 +57,17 @@ export function BaseForm({
 
     // Custom validation
     if (fieldConfig.validation) {
-      return fieldConfig.validation(value)
+      return fieldConfig.validation(value, allValues || values)
     }
 
     return undefined
-  }, [initialValues])
+  }, [initialValues, values])
 
   const validateForm = useCallback((formValues: Record<string, unknown>): Record<string, string> => {
     const newErrors: Record<string, string> = {}
     
     Object.keys(initialValues).forEach(key => {
-      const error = validateField(key, formValues[key])
+      const error = validateField(key, formValues[key], formValues)
       if (error) {
         newErrors[key] = error
       }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Input, Dropdown } from '@/shared/components'
+import { Input, Dropdown, PasswordInput } from '@/shared/components'
 
-interface FormFieldProps {
+export interface FormFieldProps {
   name: string
   label: string
   type?: 'text' | 'email' | 'password' | 'number' | 'date' | 'textarea' | 'dropdown'
@@ -39,6 +39,10 @@ export function FormField({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = type === 'number' ? Number(e.target.value) : e.target.value
     onChange(name, newValue)
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(name, e.target.value)
   }
 
   const handleDropdownChange = (value: string | string[]) => {
@@ -87,6 +91,21 @@ export function FormField({
           <p className="text-sm text-red-600">{error}</p>
         )}
       </div>
+    )
+  }
+
+  if (type === 'password') {
+    return (
+      <PasswordInput
+        label={label}
+        value={value as string}
+        onChange={handlePasswordChange}
+        onBlur={handleBlur}
+        placeholder={placeholder}
+        error={showError ? error : undefined}
+        disabled={disabled}
+        size={size}
+      />
     )
   }
 

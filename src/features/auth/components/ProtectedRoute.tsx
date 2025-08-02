@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '@/stores'
@@ -16,13 +16,27 @@ export function ProtectedRoute({
 }: ProtectedRouteProps) {
   const { user, isAuthenticated, checkAuth } = useAuthStore()
   const location = useLocation()
+  const [hasChecked, setHasChecked] = useState(false)
 
   useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
+    // Always check auth with server for security
+    if (!hasChecked) {
+      const performAuthCheck = async () => {
+        try {
+          await checkAuth()
+        } catch (error) {
+          console.error('Auth check failed:', error)
+        } finally {
+          setHasChecked(true)
+        }
+      }
+
+      performAuthCheck()
+    }
+  }, [checkAuth, hasChecked])
 
   // Show loading while checking authentication
-  if (!isAuthenticated && user === null) {
+  if (!hasChecked) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-8 h-8 rounded-full border-b-2 border-blue-600 animate-spin"></div>
@@ -35,7 +49,7 @@ export function ProtectedRoute({
     return <Navigate to={fallbackPath} state={{ from: location }} replace />
   }
 
-  // Check role-based access
+  // Check role-based access (role comes from server, not localStorage)
   if (requiredRole && user?.role !== requiredRole) {
     // Redirect to appropriate dashboard based on user role
     const redirectPath = user?.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'

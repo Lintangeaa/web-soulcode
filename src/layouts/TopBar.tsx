@@ -1,6 +1,6 @@
 import { FiMenu, FiChevronDown, FiLogOut } from 'react-icons/fi'
 import { useLayoutStore, useAuthStore } from '@/stores'
-import { Button } from '@/shared/components'
+import { Button, Avatar } from '@/shared/components'
 
 export function TopBar() {
   const { openSidebar } = useLayoutStore()
@@ -19,13 +19,7 @@ export function TopBar() {
         <div className="flex items-center space-x-4">
           <div className="relative">
             <button className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200">
-              <div className="flex justify-center items-center w-8 h-8 bg-gray-300 rounded-full overflow-hidden">
-                <img
-                  src={user?.avatar || 'https://via.placeholder.com/32'}
-                  alt={user?.name}
-                  className="object-cover w-8 h-8 rounded-full"
-                />
-              </div>
+              <Avatar src={user?.avatar} alt={user?.name} size="sm" />
               <span className="hidden md:block font-medium">{user?.name || 'User'}</span>
               <FiChevronDown className="w-4 h-4 transition-transform duration-200" />
             </button>

@@ -1,69 +1,95 @@
 
-import { Card, Button } from '@/shared/components'
 import { useAuthStore } from '@/stores'
-import { FiUser, FiLogOut, FiFileText, FiCalendar } from 'react-icons/fi'
+import { Card, Button, Avatar } from '@/shared/components'
+import { 
+  FiUser, 
+  FiFileText, 
+  FiBell, 
+  FiMail,
+  FiCalendar,
+  FiTrendingUp
+} from 'react-icons/fi'
 
 export function UserDashboard() {
-  const { user, logout } = useAuthStore()
+  const { user } = useAuthStore()
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">User Dashboard</h2>
-          <p className="text-sm text-gray-600">Welcome back, {user?.name}!</p>
-        </div>
-        <Button
-          variant="outline"
-          onClick={logout}
-          icon={<FiLogOut className="w-4 h-4" />}
-        >
-          Logout
-        </Button>
+        <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
+        <div className="text-sm text-gray-500">Welcome back, {user?.name}!</div>
       </div>
 
-      {/* User Stats */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
+      {/* Stats cards */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="p-6 bg-white rounded-lg shadow">
           <div className="flex items-center">
             <div className="p-3 text-blue-600 bg-blue-100 rounded-full">
               <FiFileText className="w-6 h-6" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">My Documents</p>
+              <p className="text-sm font-medium text-gray-600">Documents</p>
               <p className="text-2xl font-semibold text-gray-900">12</p>
             </div>
           </div>
-        </Card>
+        </div>
 
-        <Card>
+        <div className="p-6 bg-white rounded-lg shadow">
           <div className="flex items-center">
             <div className="p-3 text-green-600 bg-green-100 rounded-full">
-              <FiCalendar className="w-6 h-6" />
+              <FiTrendingUp className="w-6 h-6" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active Tasks</p>
+              <p className="text-sm font-medium text-gray-600">Projects</p>
+              <p className="text-2xl font-semibold text-gray-900">3</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 bg-white rounded-lg shadow">
+          <div className="flex items-center">
+            <div className="p-3 text-yellow-600 bg-yellow-100 rounded-full">
+              <FiBell className="w-6 h-6" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Notifications</p>
               <p className="text-2xl font-semibold text-gray-900">5</p>
             </div>
           </div>
-        </Card>
+        </div>
 
-        <Card>
+        <div className="p-6 bg-white rounded-lg shadow">
           <div className="flex items-center">
             <div className="p-3 text-purple-600 bg-purple-100 rounded-full">
-              <FiUser className="w-6 h-6" />
+              <FiCalendar className="w-6 h-6" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Profile Status</p>
-              <p className="text-2xl font-semibold text-gray-900">Complete</p>
+              <p className="text-sm font-medium text-gray-600">Tasks</p>
+              <p className="text-2xl font-semibold text-gray-900">8</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <Card title="Quick Actions" subtitle="Common tasks">
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600">
+              Access frequently used features and perform common tasks.
+            </p>
+            <div className="flex space-x-2">
+              <Button variant="primary" icon={<FiMail className="w-4 h-4" />}>
+                Send Message
+              </Button>
+              <Button variant="outline">
+                View Calendar
+              </Button>
             </div>
           </div>
         </Card>
-      </div>
 
-      {/* User Actions */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <Card title="My Profile" subtitle="Manage your account">
+        <Card title="Settings" subtitle="Account preferences">
           <div className="space-y-4">
             <p className="text-sm text-gray-600">
               Update your profile information, change password, and manage preferences.
@@ -125,11 +151,7 @@ export function UserDashboard() {
       {/* User Info */}
       <Card title="Account Information" subtitle="Your account details">
         <div className="flex items-center space-x-4">
-          <img
-            className="w-16 h-16 rounded-full"
-            src={user?.avatar || 'https://via.placeholder.com/64'}
-            alt={user?.name}
-          />
+          <Avatar src={user?.avatar} alt={user?.name} size="lg" />
           <div>
             <h3 className="text-lg font-medium text-gray-900">{user?.name}</h3>
             <p className="text-sm text-gray-600">{user?.email}</p>

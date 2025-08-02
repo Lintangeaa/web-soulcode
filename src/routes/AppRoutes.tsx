@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { MainLayout } from '@/layouts'
-import { LoginForm, ProtectedRoute } from '@/features/auth'
+import { LoginForm, RegisterForm, ProtectedRoute, RoleRedirect } from '@/features/auth'
 import { 
   AdminDashboard, 
   Analytics, 
@@ -17,6 +17,7 @@ export function AppRoutes() {
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
         
         {/* Protected admin routes */}
         <Route path="/admin" element={
@@ -45,9 +46,10 @@ export function AppRoutes() {
           <Route path="projects" element={<Projects />} />
         </Route>
 
-        {/* Default redirect based on role */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/dashboard" element={<Navigate to="/login" replace />} />
+        {/* Catch-all routes with role-based redirect */}
+        <Route path="/" element={<RoleRedirect />} />
+        <Route path="/dashboard" element={<RoleRedirect />} />
+        <Route path="*" element={<RoleRedirect />} />
       </Routes>
     </BrowserRouter>
   )

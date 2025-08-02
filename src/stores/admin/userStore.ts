@@ -1,4 +1,4 @@
-import type { User } from '@/features/admin/users'
+import type { User } from '@/types/User'
 import { create } from 'zustand'
 
 interface UserState {
@@ -10,13 +10,13 @@ interface UserState {
   setStatusFilter: (status: string) => void
   setShowAddUser: (show: boolean) => void
   addUser: (user: User) => void
-  deleteUser: (userId: number) => void
+  deleteUser: (userId: string) => void
   getFilteredUsers: () => User[]
 }
 
 const mockUsers: User[] = [
   {
-    id: 1,
+    id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
     role: 'Admin',
@@ -25,7 +25,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 2,
+    id: '2',
     name: 'Jane Smith',
     email: 'jane.smith@example.com',
     role: 'User',
@@ -34,7 +34,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 3,
+    id: '3',
     name: 'Mike Johnson',
     email: 'mike.johnson@example.com',
     role: 'Moderator',
@@ -43,7 +43,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 4,
+    id: '4',
     name: 'Sarah Wilson',
     email: 'sarah.wilson@example.com',
     role: 'User',
@@ -52,7 +52,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 5,
+    id: '5',
     name: 'David Brown',
     email: 'david.brown@example.com',
     role: 'User',
@@ -61,7 +61,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 6,
+    id: '6',
     name: 'Emily Davis',
     email: 'emily.davis@example.com',
     role: 'Editor',
@@ -70,7 +70,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 7,
+    id: '7',
     name: 'Robert Wilson',
     email: 'robert.wilson@example.com',
     role: 'User',
@@ -79,7 +79,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 8,
+    id: '8',
     name: 'Lisa Anderson',
     email: 'lisa.anderson@example.com',
     role: 'Admin',
@@ -88,7 +88,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 9,
+    id: '9',
     name: 'Michael Chen',
     email: 'michael.chen@example.com',
     role: 'User',
@@ -97,7 +97,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 10,
+    id: '10',
     name: 'Amanda Taylor',
     email: 'amanda.taylor@example.com',
     role: 'Moderator',
@@ -106,7 +106,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 11,
+    id: '11',
     name: 'James Rodriguez',
     email: 'james.rodriguez@example.com',
     role: 'User',
@@ -115,7 +115,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 12,
+    id: '12',
     name: 'Sophia Lee',
     email: 'sophia.lee@example.com',
     role: 'Editor',
@@ -124,7 +124,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 13,
+    id: '13',
     name: 'Daniel Martinez',
     email: 'daniel.martinez@example.com',
     role: 'User',
@@ -133,7 +133,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 14,
+    id: '14',
     name: 'Olivia Garcia',
     email: 'olivia.garcia@example.com',
     role: 'Admin',
@@ -142,7 +142,7 @@ const mockUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face'
   },
   {
-    id: 15,
+    id: '15',
     name: 'Christopher Thompson',
     email: 'christopher.thompson@example.com',
     role: 'User',
@@ -163,7 +163,7 @@ export const useUserStore = create<UserState>((set, get) => ({
   setShowAddUser: (show) => set({ showAddUser: show }),
   
   addUser: (user) => set((state) => ({ 
-    users: [...state.users, { ...user, id: Math.max(...state.users.map(u => u.id)) + 1 }] 
+    users: [...state.users, { ...user, id: Date.now().toString() }] 
   })),
   
   deleteUser: (userId) => set((state) => ({ 

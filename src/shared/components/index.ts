@@ -21,3 +21,9 @@ export { Badge } from '@/shared/components/Badge'
 
 // Form Components
 export { BaseForm, FormField } from '@/shared/components/Form'
+
+// Avatar Components
+export { Avatar } from '@/shared/components/Avatar'
+
+// Toast Components
+export { Toast, ToastContainer, useToast } from '@/shared/components/Toast'
